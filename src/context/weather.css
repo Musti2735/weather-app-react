@@ -1,9 +1,12 @@
-.card{
-    width: 18rem;
-
+.container{
+    display: flex;
 }
 
-.item{
+.currentDay{
+    background-color: aliceblue;
+}
 
-    
+.card{
+    width: 18rem;
+    margin: 20px;
 }

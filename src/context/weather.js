@@ -42,12 +42,6 @@ export const WeatherProvider = ({ children }) => {
         data, setData, city, setCity
     }
 
-    const showDetail =(id)=>{
-
-        setDetail(detail === false ? true : false)
-    }
-
-
     return <WeatherContext.Provider value={values}> {children}
 
         <div className='d-flex justify-content-center mt-5'>
@@ -60,31 +54,15 @@ export const WeatherProvider = ({ children }) => {
             {data.city ? <h3>Şehir : {data.city.name}</h3> : null}
         </div>
 
-        <div>
+        <div className='container'>
             {data.city && allDays.map((day, index) => {
                 return (
-                    <div key={index}>
-                        <div >
-                            <h4>Tarih : {day.map((hour) => hour.dt_txt)[0].slice(0, 10)}</h4>
-                            <p>En Yüksek {Math.floor(day.map((hour) => hour.main.temp_max).sort((a, b) => b - a)[0])} °C</p>
-                            <p>En Düşük {day.map((hour) => hour.main.temp_min).sort((a, b) => a - b)[0]} °C</p>
-                            <button type='submit' onClick={() => showDetail()}>Detay</button>
-                        </div>
-                        {
-                            detail &&
-                            <div className='container' >
-                                {day.map((hour, index) => {
-                                    return (
-                                        <div key={index} className='card'>
-                                            <p>Saat: {hour.dt_txt.slice(10, 16)} </p>
-                                            {hour.main ? <p>Derece: {Math.floor(hour.main.temp_max)} °C</p> : null}
-                                            {hour.main ? <p>Hava : {hour.weather[0].description}</p> : null}
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        }
+                    <div key={index} className={index == 0 ? 'card currentDay' :  ' card otherDays'}>
+       
+                        <p>{day.map((hour) => hour.dt_txt)[0].slice(0, 10)}</p>
 
+                        <p>En Yüksek {Math.floor(day.map((hour) => hour.main.temp_max).sort((a, b) => b - a)[0])} °C</p>
+                        <p>En Düşük {day.map((hour) => hour.main.temp_min).sort((a, b) => a - b)[0]} °C</p>
                     </div>
                 )
             })}
