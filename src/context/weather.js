@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useRef, useEffect } from 'react';
 import './weather.css';
 
 
@@ -12,6 +12,7 @@ export const WeatherProvider = ({ children }) => {
     const [dataList, setDataList] = useState([])
     const [city, setCity] = useState('')
     const [detail, setDetail] = useState(false)
+
 
     const fetchData = async () => {
         const result = `${url}forecast?q=${city}&lang=tr&appid=${key}&units=metric`
@@ -42,6 +43,11 @@ export const WeatherProvider = ({ children }) => {
         data, setData, city, setCity
     }
 
+    const showDetail = (e) => {
+
+        console.log(e)
+    }
+
     return <WeatherContext.Provider value={values}> {children}
 
         <div className='d-flex justify-content-center mt-5'>
@@ -56,21 +62,38 @@ export const WeatherProvider = ({ children }) => {
 
         <div className='container'>
             {data.city && allDays.map((day, index) => {
-                return (
-                    <div key={index} className={index == 0 ? 'card currentDay' :  ' card otherDays'}>
-       
-                        <p>{day.map((hour) => hour.dt_txt)[0].slice(0, 10)}</p>
 
+                return (<>
+                    <div key={index} className={index == 0 ? 'card currentDay' : ' card otherDays'}>
+                        <p>{day.map((hour) => hour.dt_txt)[0].slice(0, 10)}</p>
                         <p>En Yüksek {Math.floor(day.map((hour) => hour.main.temp_max).sort((a, b) => b - a)[0])} °C</p>
                         <p>En Düşük {day.map((hour) => hour.main.temp_min).sort((a, b) => a - b)[0]} °C</p>
-                    </div>
-                )
+                        </div>
+
+                        <div>
+                        <button onClick={(e) => e.target.nextSibling.className = e.target.nextSibling.className == 'hidden' ? 'visible' : 'hidden'} >Detay</button>
+                        
+                        <div className='hidden'>
+                            {day.map((hour, index) => {
+                                return (
+                                    <div key={index} className=''>
+                                        <p>Saat: {hour.dt_txt.slice(10, 16)} {index}</p>
+                                        {hour.main ? <p>Derece: {Math.floor(hour.main.temp_max)} °C</p> : null}
+                                        {hour.main ? <p>Hava : {hour.weather[0].description}</p> : null}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        </div>
+                      
+                    
+                </>)
             })}
         </div>
 
 
 
-    </WeatherContext.Provider>;
+    </WeatherContext.Provider >;
 
 };
 

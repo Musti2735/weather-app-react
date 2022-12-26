@@ -1,5 +1,8 @@
 .container{
-    display: flex;
+    display: flex; 
+     
+
+  
 }
 
 .currentDay{
@@ -8,5 +11,12 @@
 
 .card{
     width: 18rem;
-    margin: 20px;
+
+}
+
+.hidden{
+    display: none;
+}
+.visible{
+    display:inline;
 }

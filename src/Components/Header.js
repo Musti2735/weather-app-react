@@ -7,7 +7,7 @@ function Header (){
 
     return(
         <div> 
-            <h2>Hava Durumu</h2>
+            <h2>Header</h2>
             <WeatherCard/>
         </div>
     )

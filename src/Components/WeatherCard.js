@@ -5,11 +5,9 @@ function WeatherCard() {
     const { city, data, setData, setCity } = useContext(WeatherContext)
 
 
-
-
     return (<>
         <div>
-    
+        WeatherCard
         </div>
     </>
     )
